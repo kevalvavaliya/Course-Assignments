@@ -1,2 +1,3 @@
 from models.assignmentmodel import AssignmentModel
-from models.usermodel import UserModel,student_assignment_association
+from models.usermodel import UserModel
+from models.associationmodel import AssociationModel

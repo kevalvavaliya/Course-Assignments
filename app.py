@@ -5,6 +5,7 @@ from resources.auth import blp as Auth
 from resources.assignment import blp as Assignment
 from db import db
 import models
+from flask_jwt_extended import JWTManager 
 
 # intializing Flask app
 app = Flask(__name__)
@@ -26,6 +27,11 @@ db.init_app(app)
 
 api = Api(app)
 
+# jwt configuration
+app.config["JWT_SECRET_KEY"]="keval"
+jwt = JWTManager(app)
+
+# creating tables from models in db
 with app.app_context():
     db.create_all()
 
