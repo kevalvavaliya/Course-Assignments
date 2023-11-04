@@ -5,6 +5,7 @@ from schemas import UserLoginSchema
 from db import db
 from models import UserModel
 from flask_jwt_extended import create_access_token
+from sqlalchemy.exc import SQLAlchemyError,IntegrityError
 
 
 blp = Blueprint("Auth",__name__,description="Authentication service")
@@ -16,7 +17,6 @@ class UserLogin(MethodView):
     #     return "Auth service running"
 
     @blp.arguments(UserLoginSchema)
-    # @blp.response(200,UserLoginSchema)
     def post(self,userdata):
         username = userdata["username"]
         password = userdata["password"]
@@ -39,13 +39,17 @@ class UserRegister(MethodView):
     def post(self,user_data):
         username = user_data.get("username")
         password = user_data.get("password")
-        if UserModel.query.filter(UserModel.username==username).first():
-            abort(409,message="A user with that username already exists.")
+        # if UserModel.query.filter(UserModel.username==username).first():
+        #     abort(409,message="A user with that username already exists.")
         
         user = UserModel(username=username,password=password)
-
-        db.session.add(user)
-        db.session.commit()
         
-        return {"message": "User created successfully."}, 201
+        try:
+            db.session.add(user)
+            db.session.commit()
+            return {"message": "User created successfully."}, 201
+        except IntegrityError as e:
+            abort(400,message="A user with that username already exists.")
+        except SQLAlchemyError as e:
+             abort(500, message="An error occurred while registering the user.")
 
