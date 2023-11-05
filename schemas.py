@@ -16,7 +16,7 @@ class AssignmentSchema(Schema):
     aid = fields.Int(dump_only=True,required=True)
     title = fields.Str(required=True,error_messages={"required": "Assignment title is required."})
     desc  = fields.Str(required=True,error_messages={"required":"Assignment description is required."})
-    teacher_id = fields.Int()
+    teacher_id = fields.Int(dump_only=True)
 
 class AssignmentUpdateSchema(Schema):
     aid = fields.Int(dump_only=True)

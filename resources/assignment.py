@@ -8,19 +8,28 @@ from sqlalchemy.exc import SQLAlchemyError,IntegrityError
 
 
 blp = Blueprint("Assignment",__name__,description="Assignment service")
-
+Autheaders={
+            "Authorization": {
+                "description": "User's authentication token (Bearer token)",
+                "required": True,
+                "type": "string"
+            }
+    }
 # ASSIGNMENT CLASS for fetching,deleting and updating assignment using ID
 @blp.route("/assignment/<int:assignment_id>")
 class Assignment(MethodView):
 
     # GET method for FETCHING specific assignment using Assignment ID
     @blp.response(200,AssignmentSchema)
+    @blp.doc(summary="Get assignment using assignment id",)   
     def get(self,assignment_id):
         assignment = AssignmentModel.query.get_or_404(assignment_id,description=f"No assignment found")
         return assignment
     
     # DELETE method for DELETING specific assignment using Assignment ID
     @jwt_required() 
+    @blp.doc(summary="Delete assignment using assignment id",)  
+    @blp.response(200,description="Assignment deleted",headers=Autheaders) 
     def delete(self,assignment_id):
         
     
@@ -42,7 +51,8 @@ class Assignment(MethodView):
     # PUT method for UPDATING specific assignment using Assignment ID 
     @jwt_required()
     @blp.arguments(AssignmentUpdateSchema)
-    @blp.response(200,AssignmentUpdateSchema)
+    @blp.response(200,AssignmentUpdateSchema,description="Assignment updated",headers=Autheaders)
+    @blp.doc(summary="Update assignment using assignment id",)   
     def put(self,assignment_data,assignment_id):
 
         if(current_user.usertype!="teacher"):
@@ -79,15 +89,19 @@ class Assignment(MethodView):
 @blp.route("/assignment")
 class AssignmentList(MethodView):
     
+    
     # GET method to get all assignments 
     @blp.response(200,AssignmentSchema(many=True))
+    @blp.doc(summary="Get All assignment",)   
     def get(self):
         return AssignmentModel.query.all()
 
     # POST method to add new assignment
     @jwt_required()
     @blp.arguments(AssignmentSchema)
-    @blp.response(201,AssignmentSchema)
+    @blp.response(201,schema=AssignmentSchema,description="Sucess",headers=Autheaders)
+    @blp.doc(description="Create Assignment",
+         summary="Create assignment",)   
     def post(self,assignment_data):
 
         # Allowing only teacher to create assignment using jwt claims
@@ -98,6 +112,7 @@ class AssignmentList(MethodView):
         ## Checking current user id from JWT with teacher id who created assignment
         if(current_user.usertype!="teacher"):
             abort(401, message="Teacher privilege required.")
+            
 
         title = assignment_data.get("title")
         desc = assignment_data.get("desc")
