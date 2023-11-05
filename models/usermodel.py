@@ -17,10 +17,13 @@ class UserModel(db.Model):
       self.password = password
       self.name = name
       
-      
     
     def __str__(self):
         return f"{self.email} , {self.name} , {self.usertype} , {self.id}"
+    
+    @classmethod
+    def getAllStudents(cls):
+       return cls.query.all()
     
     
     

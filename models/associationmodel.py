@@ -11,3 +11,9 @@ class AssociationModel(db.Model):
     user = db.relationship('UserModel', back_populates='association') 
     assignment = db.relationship('AssignmentModel', back_populates='association') 
 
+    @classmethod
+    def getListToAssign(cls,students_list,assignment):
+        aList=[]
+        for student in students_list:
+            aList.append(AssociationModel(user_id=student.id,assignment_id=assignment.aid))
+        return aList

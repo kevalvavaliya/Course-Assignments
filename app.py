@@ -7,6 +7,7 @@ from db import db
 import models
 import datetime
 from flask_jwt_extended import JWTManager
+import os
 
 # intializing Flask app
 app = Flask(__name__)
@@ -29,7 +30,7 @@ db.init_app(app)
 api = Api(app)
 
 # jwt configuration
-app.config["JWT_SECRET_KEY"]="keval"
+app.config["JWT_SECRET_KEY"]=os.environ.get("JWT_SECRET")
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=5)
 
 jwt = JWTManager(app)

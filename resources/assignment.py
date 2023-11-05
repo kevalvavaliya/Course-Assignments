@@ -3,11 +3,16 @@ from flask_smorest import Blueprint, abort
 from schemas import AssignmentSchema,AssignmentUpdateSchema
 from db import db
 from models.assignmentmodel import AssignmentModel
+from models.usermodel import UserModel
+from models.associationmodel import AssociationModel
 from flask_jwt_extended import jwt_required, get_jwt,current_user
 from sqlalchemy.exc import SQLAlchemyError,IntegrityError
+from util.sendemail import Email
 
 
 blp = Blueprint("Assignment",__name__,description="Assignment service")
+
+## documenting headers
 Autheaders={
             "Authorization": {
                 "description": "User's authentication token (Bearer token)",
@@ -15,6 +20,8 @@ Autheaders={
                 "type": "string"
             }
     }
+
+
 # ASSIGNMENT CLASS for fetching,deleting and updating assignment using ID
 @blp.route("/assignment/<int:assignment_id>")
 class Assignment(MethodView):
@@ -103,11 +110,6 @@ class AssignmentList(MethodView):
     @blp.doc(description="Create Assignment",
          summary="Create assignment",)   
     def post(self,assignment_data):
-
-        # Allowing only teacher to create assignment using jwt claims
-        # jwt = get_jwt()
-        # if not jwt.get("is_teacher"):
-        #     abort(401, message="Teacher privilege required.")
         
         ## Checking current user id from JWT with teacher id who created assignment
         if(current_user.usertype!="teacher"):
@@ -121,7 +123,20 @@ class AssignmentList(MethodView):
         assignment = AssignmentModel(title=title,desc=desc,teacher_id=teacher_id)
         try:
             db.session.add(assignment)
-            db.session.commit()
+
+            ## Assigning assignment to all students and sending
+            studentList = UserModel.getAllStudents()
+
+            associationList = AssociationModel.getListToAssign(students_list=studentList,assignment=assignment)
+            
+            emailResponse = Email.sendEmailToAllStudents(studentList,assignment,current_user.name)
+            if(emailResponse.status_code==200):
+                db.session.add_all(associationList)
+                db.session.commit()
+            else:
+                print(emailResponse.text)
+                abort(500,message="An error occured while sending assignment emails.")
+
         except IntegrityError:
             abort(409,message="An Assignment with that title already exists or Teacher with that id do not exists")
         except SQLAlchemyError as e:
