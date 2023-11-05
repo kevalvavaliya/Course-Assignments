@@ -5,7 +5,8 @@ from resources.auth import blp as Auth
 from resources.assignment import blp as Assignment
 from db import db
 import models
-from flask_jwt_extended import JWTManager 
+import datetime
+from flask_jwt_extended import JWTManager
 
 # intializing Flask app
 app = Flask(__name__)
@@ -29,7 +30,26 @@ api = Api(app)
 
 # jwt configuration
 app.config["JWT_SECRET_KEY"]="keval"
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(days=5)
+
 jwt = JWTManager(app)
+
+# @jwt.additional_claims_loader
+# def add_claims_to_jwt(identity):
+#     if identity.get("usertype") == "teacher":
+#         return {"is_teacher": True}
+#     return {"is_teacher": False}
+
+@jwt.user_lookup_loader
+def user_lookup_callback(_jwt_headers,jwt_data):
+    
+    email=jwt_data['sub']['email']
+    
+    user = models.UserModel.query.filter_by(email=email).first()
+    if not user:
+        user = models.TeacherModel.query.filter_by(email=email).first()
+
+    return user
 
 # creating tables from models in db
 with app.app_context():
