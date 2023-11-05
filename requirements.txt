@@ -10,6 +10,7 @@ Flask-JWT-Extended==4.5.3
 flask-smorest==0.42.1
 flask-sqlalchemy==3.1.1
 greenlet==3.0.1
+gunicorn==21.2.0
 idna==3.4
 importlib-metadata==6.8.0
 itsdangerous==2.1.2
