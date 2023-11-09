@@ -10,10 +10,9 @@ from sqlalchemy.exc import SQLAlchemyError,IntegrityError
 
 blp = Blueprint("Auth",__name__,description="Authentication service")
 
-
 @blp.route("/login")
 class UserLogin(MethodView):
-
+   
     # POST METHOD FOR LOGIN
     @blp.arguments(UserLoginSchema)
     def post(self,user_data):
