@@ -35,4 +35,4 @@ This repository contains the source code for a course assignments project, which
 4. Run server: `flask run` 
 
 #### API Documentation
-For detailed API documentation, refer to [API Documentation](api_documentation.md).
+For detailed API documentation, refer to [API Documentation]([Swagger](https://course-assignments.onrender.com/docs)https://course-assignments.onrender.com/docs).
