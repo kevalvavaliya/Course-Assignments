@@ -14,11 +14,11 @@ from dotenv import load_dotenv
 def create_app():
     app = Flask(__name__)
     CORS(app)
-    load_dotenv()
+    load_dotenv(verbose=True, override=True)
 
     # Configuration for api reference and doc using swagger
     app.config["PROPAGATE_EXCEPTIONS"]=True
-    app.config["API_TITLE"]="Keval Playpower Labs Backend Task"
+    app.config["API_TITLE"]="Course Assignment backend system"
     app.config["API_VERSION"]="v1"
     app.config["OPENAPI_VERSION"]="3.0.3"
     app.config["OPENAPI_URL_PREFIX"]="/"
@@ -52,7 +52,6 @@ def create_app():
         user = models.UserModel.query.filter_by(email=email).first()
         if not user:
             user = models.TeacherModel.query.filter_by(email=email).first()
-
         return user
 
     # creating tables from models in db

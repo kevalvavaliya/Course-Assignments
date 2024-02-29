@@ -1,6 +1,6 @@
 from flask.views import MethodView
 from flask_smorest import Blueprint, abort
-from schemas import AssignmentSchema,AssignmentUpdateSchema
+from schemas import AssignmentSchema,AssignmentUpdateSchema,AssignmentPaginationSchema
 from db import db
 from models.assignmentmodel import AssignmentModel
 from models.usermodel import UserModel
@@ -38,7 +38,6 @@ class Assignment(MethodView):
     @blp.doc(summary="Delete assignment using assignment id",)  
     @blp.response(200,description="Assignment deleted",headers=Autheaders) 
     def delete(self,assignment_id):
-        
     
         if(current_user.usertype!="teacher"):
             abort(401, message="Teacher privilege required.")
@@ -144,3 +143,16 @@ class AssignmentList(MethodView):
         
         return assignment
 
+
+# @blp.route("/assignmentListPagination")
+# class AssignmentListTest(MethodView):
+#     @blp.response(201,schema=AssignmentSchema,description="Sucess",many=True)
+#     @blp.arguments(AssignmentPaginationSchema)
+#     def post(self,data):
+#         pageSize = data.get('pagesize')
+#         pageRows = data.get('pageRows')
+#         ans = AssignmentModel.query.limit(pageRows).all()
+#         print(ans)
+
+#         # return  "temporary respone"
+#         return AssignmentModel.query.limit(pageRows,).all()

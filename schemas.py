@@ -24,3 +24,9 @@ class AssignmentUpdateSchema(Schema):
     desc  = fields.Str()
     teacher_id = fields.Int()
     
+class AssignmentPaginationSchema(Schema):
+    pagesize = fields.Int()
+    pageRows = fields.Int()
+
+    
+    

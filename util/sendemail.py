@@ -16,7 +16,7 @@ class Email:
         return requests.post(
         f"https://api.mailgun.net/v3/{os.getenv('MAILGUN_DOMAIN')}/messages",
         auth=("api", os.getenv("MAILGUN_API_KEY")),
-        data={"from": "Keval Vavaliya@playpowerlabs.kevalvavaliya.tech",
+        data={"from": "Keval Vavaliya@backend.kevalvavaliya.me",
               "to": emailList,
               "subject": f"New Assignment {assignment.title} has been Assigned",
               "text": f" Hello %recipient.name% you have got assignment from {teacherName} \n\n Description of assignment :{assignment.desc} \n\n Thanks",

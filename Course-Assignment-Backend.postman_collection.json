@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "7c5afc8d-c6ac-422f-91c0-6702cbd86384",
+		"name": "Course-Assignment-Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "14849672"
+	},
+	"item": [
+		{
+			"name": "Teacher Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\":\"ankit@gmail.com\",\r\n  \"password\":\"1234\",\r\n  \"name\":\"ankit Teacher\",\r\n  \"usertype\":\"teacher\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://kevalplaypower.onrender.com/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Teacher Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\":\"ankit@gmail.com\",\r\n  \"password\":\"1234\",\r\n  \"usertype\":\"teacher\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://kevalplaypower.onrender.com/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Student Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\":\"vinitpithadiya@gmail.com\",\r\n  \"password\":\"1234\",\r\n  \"name\":\"Vinit pithadiya\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://kevalplaypower.onrender.com/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Student Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\":\"kevalvavaliya@gmail.com\",\r\n  \"password\":\"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://kevalplaypower.onrender.com/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Assignment",
+			"request": {
+				"auth": {
+					"type": "jwt",
+					"jwt": {
+						"algorithm": "HS256",
+						"isSecretBase64Encoded": false,
+						"payload": "{}",
+						"addTokenTo": "header",
+						"headerPrefix": "Bearer",
+						"queryParamKey": "token",
+						"header": "{}"
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5OTE5MjE1OSwianRpIjoiYTU3ZWFmYTgtODczNi00MzBmLWE4MTYtNGJhMGEzNTYxYmZlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJlbWFpbCI6ImFua2l0QGdtYWlsLmNvbSIsImlkIjoxfSwibmJmIjoxNjk5MTkyMTU5LCJleHAiOjE2OTk2MjQxNTl9.GuDCxF0Kk5mUtA57l9nVYrWEGX_D_hAKArPGCl9Wk5I",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\":\"Playbook assignment Submission 2\",\r\n  \"desc\": \"Create backend task\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://kevalplaypower.onrender.com/assignment"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Assignment using ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://kevalplaypower.onrender.com/assignment/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Assignments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://kevalplaypower.onrender.com/assignment"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Assignment",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5OTE5MjE1OSwianRpIjoiYTU3ZWFmYTgtODczNi00MzBmLWE4MTYtNGJhMGEzNTYxYmZlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJlbWFpbCI6ImFua2l0QGdtYWlsLmNvbSIsImlkIjoxfSwibmJmIjoxNjk5MTkyMTU5LCJleHAiOjE2OTk2MjQxNTl9.GuDCxF0Kk5mUtA57l9nVYrWEGX_D_hAKArPGCl9Wk5I",
+						"type": "text"
+					}
+				],
+				"url": "https://kevalplaypower.onrender.com/assignment/1"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Assignment",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY5OTE5MjE1OSwianRpIjoiYTU3ZWFmYTgtODczNi00MzBmLWE4MTYtNGJhMGEzNTYxYmZlIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6eyJlbWFpbCI6ImFua2l0QGdtYWlsLmNvbSIsImlkIjoxfSwibmJmIjoxNjk5MTkyMTU5LCJleHAiOjE2OTk2MjQxNTl9.GuDCxF0Kk5mUtA57l9nVYrWEGX_D_hAKArPGCl9Wk5I",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\":\"Assignment 2\",\r\n  \"desc\":\"ass desc 2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://kevalplaypower.onrender.com/assignment/1",
+					"protocol": "https",
+					"host": [
+						"kevalplaypower",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"assignment",
+						"1"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
